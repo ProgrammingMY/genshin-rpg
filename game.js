@@ -67,9 +67,9 @@ function create_traveller(message) {
         // save the traveller data into a database
         utility.savedata(message, guild.traveller[user.id]);
 
-        return message.channel.send(user.username + ` has joined the Benny's adventure!`);
+        return message.channel.send(user.username + ` has joined the Benny's Adventure Team!`);
     } else
-    return message.channel.send(`You already joined the Benny's adventure!`);
+    return message.channel.send(`You already joined the Benny's Adventure Team!`);
 }
 
 function view_profile(message, traveller) {

@@ -57,6 +57,14 @@ function backup_database() {
     })
 }
 
+function get_help(message) {
+    fs.readFile('./database/help.txt', 'utf8', function(err, data) {
+        if (err) throw err;
+
+        message.channel.send(`\`\`\`${data}\`\`\``);
+    });
+}
+
 module.exports = {
     savedata: function (message, traveller) {
         save_traveller_data (message, traveller);
@@ -66,4 +74,8 @@ module.exports = {
     loaddata: function (message) {
         return load_traveller_data (message);
     },
+
+    get_help: function (message) {
+        get_help(message);
+    }
 }
