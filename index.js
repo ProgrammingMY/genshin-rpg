@@ -6,6 +6,7 @@ const token = process.env.DISCORD_KEY;
 const PREFIX = '.';
 
 const Game = require('./game.js');
+const utility = require('./utility.js');
 
 bot.on('ready', () => {
     bot.user.setActivity('.help to get started');
@@ -53,6 +54,10 @@ bot.on('message', async message => {
 
         case 'ranking':
             Game.view_leaderboard(message);
+        break;
+
+        case 'help':
+            utility.get_help(message);
         break;
     }
 })

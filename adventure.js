@@ -158,12 +158,11 @@ async function boss_fight_live (message, traveller, turns, traveller_hp_array, b
     var msg_fight;
     var interval = 1500;
     var boss_name = select(variable.BOSS_NAME);
-    var boss_max_hp = variable.BOSS_HP_MULTIPLIER * traveller.rank;
+    var boss_max_hp = boss_hp_array[0];
     var boss_hp;
     var boss_hp_bar;
     var traveller_hp;
     var traveller_hp_bar;
-    var reward_message = '';
     let fight_title = `Level ${traveller.rank} ${boss_name} fight`;
 
     var fight_message = new Discord.MessageEmbed()
@@ -178,16 +177,14 @@ async function boss_fight_live (message, traveller, turns, traveller_hp_array, b
             // traveller turn
             boss_hp = boss_hp_array[i];
             if (boss_hp <= 0) {
-                reward_message = 'You win!';
                 boss_hp = 0;
-            };
+            }
             boss_hp_bar = progress_bar(boss_hp, boss_max_hp, 10);
             boss_hp_bar += `${boss_hp}/${boss_max_hp}`;      
 
             // boss turn
             traveller_hp = traveller_hp_array[i];
             if (traveller_hp <= 0){
-                reward_message = 'You lose!';
                 traveller_hp = 0;
             } 
             traveller_hp_bar = progress_bar(traveller_hp, traveller.hp, 10);
@@ -207,7 +204,7 @@ async function boss_fight_live (message, traveller, turns, traveller_hp_array, b
                 .setTitle(fight_title)
                 .addField(`${traveller.name} HP`, traveller_hp_bar)
                 .addField(`${boss_name} HP`, boss_hp_bar)
-                .addField(reward_message, reward_list)
+                .addField(rewards[2], reward_list)
                 .addField('Resin remaining:', `${traveller.resin}/300 ${variable.RESIN}`)
                 msg_fight.edit(update_hp);
             }
@@ -245,11 +242,11 @@ function boss_fight (message, traveller) {
             var new_mora = variable.MORA_BOSS_MULTIPLIER * traveller.rank;
             traveller.primo += new_primo;
             traveller.mora += new_mora;
-            rewards = [new_mora, new_primo];
+            rewards = [new_mora, new_primo, 'You Win!'];
             return [traveller, turns, traveller_hp_array, boss_hp_array, rewards];
         };
         if (traveller_hp <= 0) {
-            rewards = [0, 0];
+            rewards = [0, 0, 'You Lose!'];
             return [traveller, turns, traveller_hp_array, boss_hp_array, rewards];
         };
     };

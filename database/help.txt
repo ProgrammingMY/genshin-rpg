@@ -1,0 +1,21 @@
+Welcome to Benny's Adventure Team!
+
+.create           - create a profile
+
+.p or .profile    - view your profile stats
+
+.daily            - claim your daily rewards. Keep your streak to earn more rewards!
+
+.hunt [number]    - spend your resins to collect moras and primos
+
+.pull [number]    - spend your primos to pull characters and get more bonus stats
+
+.boss             - spend your resins to challenge the boss and rank up in the leaderboard!
+
+.arti [1-4]       - spend your moras to get random bonus stats up to 4 stats. Be careful the bonus can be negative too!
+
+.char             - view your characters and their constellation
+
+.ranking          - see where are you in the leaderboard!
+
+Any suggestion or bugs please report to Aki kun
