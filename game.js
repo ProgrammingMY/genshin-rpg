@@ -240,7 +240,7 @@ module.exports = {
     roll_artifact: function(message, substats = 1) {
         // error checking
         if (!Number(substats)) return message.channel.send('Incorrect input');
-        if (substats < 1) return message.channel.send('Only 1 to 4 substats allowed');
+        if (substats < 1) return message.channel.send('Incorrect input');
 
         var traveller = get_traveller_data(message);
         if (!traveller) return message.channel.send('You havent register the adventure');
