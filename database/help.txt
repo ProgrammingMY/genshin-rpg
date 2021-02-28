@@ -12,10 +12,10 @@ Welcome to Benny's Adventure Team!
 
 .boss             - spend your resins to challenge the boss and rank up in the leaderboard!
 
-.arti [1-4]       - spend your moras to get random bonus stats up to 4 stats. Be careful the bonus can be negative too!
+.gamba [mora]     - spend your moras to get random bonus stats up to 4 stats. Be careful the bonus can be negative too!
 
 .char             - view your characters and their constellation
 
-.ranking          - see where are you in the leaderboard!
+.rank             - see where are you in the leaderboard!
 
 Any suggestion or bugs please report to Aki kun

@@ -48,11 +48,11 @@ bot.on('message', async message => {
             Game.view_inventory(message);
         break;
 
-        case 'arti':
+        case 'gamba':
             Game.roll_artifact(message, args[1]);
         break;
 
-        case 'ranking':
+        case 'rank':
             Game.view_leaderboard(message);
         break;
 
