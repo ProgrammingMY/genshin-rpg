@@ -98,10 +98,9 @@ function claim_daily(message, traveller) {
     // check if streak
     var remaining_time = Math.floor((last_used_daily_time.getTime() - daily_reset.getTime()) / one_day);
 
-    let progress = progress_bar(traveller.daily, 10, 10);
-
     // daily reward already claimed
     if (remaining_time == 0) {
+        let progress = progress_bar(traveller.daily, 10, 10);
         let daily_message = new Discord.MessageEmbed()
         .setColor('FF0000')
         .setTitle('Already claimed for today, please comeback tomorrow!')
@@ -135,6 +134,8 @@ function claim_daily(message, traveller) {
         traveller.mora += new_mora;
         traveller.primo += new_primo;
     }
+
+    let progress = progress_bar(traveller.daily, 10, 10);
 
     let reward_list = variable.MORA + `\`+${new_mora} mora\`` + '\n';
     reward_list += variable.PRIMO + `\`+${new_primo} primogems\`` + '\n';
@@ -238,8 +239,8 @@ function boss_fight (message, traveller) {
 
         if (boss_hp <= 0) {
             traveller.rank += 1;
-            var new_primo = variable.PRIMO_BOSS_MULTIPLIER * traveller.rank;
-            var new_mora = variable.MORA_BOSS_MULTIPLIER * traveller.rank;
+            var new_primo = Math.floor(variable.PRIMO_BOSS_MULTIPLIER * traveller.rank);
+            var new_mora = Math.floor(variable.MORA_BOSS_MULTIPLIER * traveller.rank);
             traveller.primo += new_primo;
             traveller.mora += new_mora;
             rewards = [new_mora, new_primo, 'You Win!'];

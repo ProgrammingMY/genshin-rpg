@@ -13,15 +13,29 @@ function select(list) {
     return item;
 }
 
-function get_random_value (min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+function get_random_value (min, max, range = 1, quality = 0) {
+    min = Math.ceil((min + quality) * range);
+    max = Math.floor((max + quality) * range);
 
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+function get_stat_quality (mora) {
+    let quality = 0;
+    let range = 0;
+
+    while (mora > 0) {
+        range += 1;
+        quality = (mora % 10);
+        mora = Math.floor(mora / 10);
+    }
+
+    return [quality, range];
+}
+
 //roll artifact
-function roll_artifact(message, traveller, number_substats) {
+function roll_artifact(message, traveller, mora) {
+    let [quality, range] = get_stat_quality (mora);
     var substats_list = ['atk', 'hp', 'crit_rate', 'crit_dmg'];
     let new_hp = 0;
     let new_atk = 0;
@@ -29,45 +43,44 @@ function roll_artifact(message, traveller, number_substats) {
     let new_crit_dmg = 0;
     let stats_list = '';
 
-    for (var i = 0; i < number_substats; i++) {
+    for (var i = 0; i < 4; i++) {
         var index = Math.floor( Math.random() * substats_list.length);
 
         switch (substats_list[index]) {
             case 'atk':
-                new_atk = get_random_value(variable.ARTIFACT_ATK[0], variable.ARTIFACT_ATK[1]);
+                new_atk = get_random_value(variable.ARTIFACT_ATK[0], variable.ARTIFACT_ATK[1], range, quality/100);
+                traveller.atk = Math.floor(traveller.atk * (1 + (new_atk/100)));
                 stats_list += `\n\`${new_atk}% ATK\``;
             break;
 
             case 'hp':
-                new_hp = get_random_value(variable.ARTIFACT_HP[0], variable.ARTIFACT_HP[1]);
+                new_hp = get_random_value(variable.ARTIFACT_HP[0], variable.ARTIFACT_HP[1], range, quality/100);
+                traveller.hp = Math.floor(traveller.hp * (1 + (new_hp/100))); 
                 stats_list += `\n\`${new_hp}% HP\``; 
             break;
 
             case 'crit_rate':      
-                new_crit_rate = get_random_value(variable.ARTIFACT_CRIT_RATE[0], variable.ARTIFACT_CRIT_RATE[1]);
+                new_crit_rate = get_random_value(variable.ARTIFACT_CRIT_RATE[0], variable.ARTIFACT_CRIT_RATE[1], range, quality/100);
+                traveller.crit_rate += new_crit_rate;
                 stats_list += `\n\`${new_crit_rate}% CRIT RATE\``;
             break;
 
             case 'crit_dmg':
-                new_crit_dmg = get_random_value(variable.ARTIFACT_CRIT_DMG[0], variable.ARTIFACT_CRIT_DMG[1]);
+                new_crit_dmg = get_random_value(variable.ARTIFACT_CRIT_DMG[0], variable.ARTIFACT_CRIT_DMG[1], range, quality/100);
+                traveller.crit_dmg += new_crit_dmg;
                 stats_list += `\n\`${new_crit_dmg}% CRIT DAMAGE\``;
             break;
         }
     };
     
-
-    // update traveller stats
-    traveller.atk = Math.floor(traveller.atk * (1 + (new_atk/100)));
-    traveller.hp = Math.floor(traveller.hp * (1 + (new_hp/100)));  
-    traveller.crit_rate += new_crit_rate;
+    // update traveller stats 
     if (traveller.crit_rate < 0) traveller.crit_rate = 0;
     else if (traveller.crit_rate > 100) traveller.crit_rate = 100;
-    traveller.crit_dmg += new_crit_dmg;
     if (traveller.crit_dmg < 0) traveller.crit_dmg = 0;
     
 
     let artifact_message = new Discord.MessageEmbed()
-    .setTitle(`${traveller.name}'s new artifact`)
+    .setTitle(`${traveller.name}'s new stats`)
     .addField('Stats Bonus', stats_list)
 
     message.channel.send(artifact_message);
@@ -157,23 +170,20 @@ module.exports = {
         return roll_character (message, traveller, quantity);
     },
 
-    roll_artifact: function (message, traveller, substats){
-        if (traveller.mora < variable.ARTIFACT_COST[substats-1]) {
-            let artifact_prices = '';
-            for (var i = 0; i < variable.ARTIFACT_COST.length; i++) {
-                artifact_prices += `\n${i+1} substat(s) = ${variable.ARTIFACT_COST[i]} ` + variable.MORA;
-            }
+    roll_artifact: function (message, traveller, mora){
+        if (traveller.mora < mora) {
+            let artifact_prices = 'You have ' + traveller.mora + ' ' +variable.MORA;
 
             let artifact_message = new Discord.MessageEmbed()
-            .addField('You don\'t have enough mora', artifact_prices);
+            .addField('Insufficient mora', artifact_prices);
 
             message.channel.send(artifact_message);
 
             return traveller;
         }
 
-        traveller.mora -= variable.ARTIFACT_COST[substats-1];
+        traveller.mora -= mora;
 
-        return roll_artifact (message, traveller, substats);
+        return roll_artifact (message, traveller, mora);
     }
 }

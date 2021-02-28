@@ -54,7 +54,7 @@ function create_traveller(message) {
             rank: 1,
             pity: 0,
             mora: 10000,
-            primo: 1000,
+            primo: 1600,
             resin: 300,
             last_used_resin_time: new Date,
             daily: 1,
@@ -195,6 +195,7 @@ module.exports = {
         // error checking
         if (!Number(quantity)) return message.channel.send('Incorrect input');
         if (quantity < 0) return message.channel.send('Incorrect input');
+        if (quantity > 10) return message.channel.send('You can pull 10 max at one time');
 
         var traveller = get_traveller_data(message);
         if (!traveller) return message.channel.send('You havent register the adventure');
@@ -239,7 +240,7 @@ module.exports = {
     roll_artifact: function(message, substats = 1) {
         // error checking
         if (!Number(substats)) return message.channel.send('Incorrect input');
-        if (substats < 1 || substats > 4) return message.channel.send('Only 1 to 4 substats allowed');
+        if (substats < 1) return message.channel.send('Only 1 to 4 substats allowed');
 
         var traveller = get_traveller_data(message);
         if (!traveller) return message.channel.send('You havent register the adventure');
