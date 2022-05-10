@@ -1,0 +1,32 @@
+{
+  "769430710351036457": {
+    "traveller": {
+      "466594885844336651": {
+        "name": "Akii",
+        "atk": 150,
+        "hp": 1250,
+        "crit_rate": 1,
+        "crit_dmg": 0,
+        "rank": 2,
+        "pity": 1,
+        "mora": 11257,
+        "primo": 1444,
+        "resin": 260,
+        "last_used_resin_time": "2022-04-27T11:04:10.960Z",
+        "daily": 1,
+        "last_used_boss_time": "2022-04-27T11:03:21.489Z",
+        "last_used_daily_time": "2022-04-27T11:01:35.298Z",
+        "character_name": [
+          "Sucrose"
+        ],
+        "character": {
+          "Sucrose": {
+            "star": 4,
+            "constellation": 0
+          }
+        }
+      }
+    },
+    "total_travellers": 1
+  }
+}

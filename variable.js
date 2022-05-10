@@ -1,9 +1,9 @@
 exports.RESIN_REFRESH_RATE = 60000; // 1 minute
 exports.HUNT_COST = 20;
 exports.MORA_REWARD_MULTIPLIER = 485.2;
-exports.PRIMO_REWARD_MULTIPLIER = 1.3;
+exports.PRIMO_REWARD_MULTIPLIER = 10.3;
 exports.MORA_DAILY_MULTIPLIER = 930.7;
-exports.PRIMO_DAILY_MULTIPLIER = 5.1;
+exports.PRIMO_DAILY_MULTIPLIER = 20.1;
 exports.REWARD_RANGE = 0.05;
 exports.ATTACK_RANGE = 0.02;
 
@@ -22,12 +22,12 @@ exports.ARTIFACT_CRIT_RATE = [-2, 2];
 exports.ARTIFACT_CRIT_DMG = [-2, 2];
 
 // battle part
-exports.BOSS_NAME = ['Stormterror Dvalin', 'Lupus Boreas', 'Childe', 'Oceanid', 'Primo Geovishap'];
+exports.BOSS_NAME = ['Stormterror Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun'];
 exports.BOSS_COST = 40;
 exports.BOSS_ATK_MULTIPLIER = 67;
 exports.BOSS_HP_MULTIPLIER = 629;
 exports.MORA_BOSS_MULTIPLIER = 629;
-exports.PRIMO_BOSS_MULTIPLIER = 2.1;
+exports.PRIMO_BOSS_MULTIPLIER = 10.1;
 
 // genshin icon emote ID
 exports.PRIMO = `<:primo:810746619963768832>`;
