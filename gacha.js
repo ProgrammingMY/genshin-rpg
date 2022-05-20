@@ -82,6 +82,7 @@ function roll_artifact(message, traveller, mora) {
     let artifact_message = new Discord.MessageEmbed()
     .setTitle(`${traveller.name}'s new stats`)
     .addField('Stats Bonus', stats_list)
+    .addField('Mora remaining:', `${variable.MORA} \`${traveller.mora}\``)
 
     message.channel.send(artifact_message);
 
@@ -172,7 +173,7 @@ module.exports = {
 
     roll_artifact: function (message, traveller, mora){
         if (traveller.mora < mora) {
-            let artifact_prices = 'You have ' + traveller.mora + ' ' +variable.MORA;
+            let artifact_prices = 'You have ' + variable.MORA + `\`${traveller.mora}\``;
 
             let artifact_message = new Discord.MessageEmbed()
             .addField('Insufficient mora', artifact_prices);

@@ -1,3 +1,3 @@
-module.exports = {} => {
-    console.log('Bouken bo t is online!');
+module.exports = () => {
+    console.log('Bouken bot is online!');
 }

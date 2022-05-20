@@ -17,11 +17,11 @@ async function save_traveller_data(message, new_traveller) {
     }
 
     // if new traveller profile is created
-    if (!guild[message.guild.id].traveller[message.author.id])
+    if (!guild[message.guild.id].traveller[new_traveller.id])
         guild[message.guild.id].total_travellers += 1;
 
     // get the traveller latest data
-    guild[message.guild.id].traveller[message.author.id] = new_traveller;
+    guild[message.guild.id].traveller[new_traveller.id] = new_traveller;
 
     let data = JSON.stringify(guild, null, 2);
     fs.writeFileSync(traveller_database, data);

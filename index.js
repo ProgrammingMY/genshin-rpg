@@ -44,6 +44,10 @@ bot.on('message', async message => {
             Game.boss_fight(message);
         break;
 
+        case 'fight':
+            Game.traveller_fight(message, message.mentions.members.first());
+        break;
+
         case 'char':
             Game.view_inventory(message);
         break;
