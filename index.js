@@ -19,6 +19,9 @@ bot.on('message', async message => {
     const args = message.content.slice(PREFIX.length).split(/ +/);
 
     switch(args[0]) {
+        case 'c':
+            Game.test(message);
+        break;
         case 'create':
             Game.create_traveller(message);
         break;

@@ -6,6 +6,11 @@ const adventure = require('./adventure.js');
 const variable = require('./variable.js');
 const gacha = require('./gacha.js');
 
+// import database management system
+const MongoClient = require('mongodb').MongoClient;
+const MONGO_URL = "mongodb://localhost:27017/";
+const MONGO_DB = "genshinDB"
+
 function get_traveller_data(message) {
     var user = message.author;
     let guild = utility.loaddata(message);
@@ -46,6 +51,7 @@ function create_traveller(message) {
     // if traveller is not registered yet
     if (!guild.traveller[user.id]) {
         guild.traveller[user.id] = {
+            id: user.id,
             name: user.username,
             atk: 100,
             hp: 1000,
@@ -147,39 +153,120 @@ function view_leaderboard (message) {
     message.channel.send(`\`\`\`css\n${leaderboard_title}\n\n${travellers_ranking}\`\`\``);
 }
 
+async function load_traveller_data(user){
+    // connect to mongo client
+    const mongo_client = MongoClient.connect(MONGO_URL);
+    const travellers = (await mongo_client).db(MONGO_DB).collection("travellers");
+
+    // find if the traveller already in the databse
+    var query = { id: user.id };
+    var traveller = await travellers.findOne(query);
+
+    return traveller;
+}
+
+async function save_traveller_data(user, traveller){
+    // connect to mongo client
+    const mongo_client = MongoClient.connect(MONGO_URL);
+    const travellers = (await mongo_client).db(MONGO_DB).collection("travellers");
+
+    // update traveller data into the database
+    var query = { id: user.id };
+    var update = { $set: traveller }
+    var option = { upsert: true };
+
+    var traveller = await travellers.updateOne(query, update, option);
+
+    return traveller;
+}
+
 module.exports = {
+    test: async function(message){
+        var user = message.author;
+
+        // load traveller data  if any
+        var traveller = await load_traveller_data(user);
+        if (traveller != null) return console.log("You already joined!");
+
+        // check if traveller exists
+        MongoClient.connect(MONGO_URL, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db(MONGO_DB);
+
+            var traveller = {
+                id: user.id,
+                name: user.username,
+                atk: 100,
+                hp: 1000,
+                crit_rate: 0,
+                crit_dmg: 0,
+                rank: 1,
+                pity: 0,
+                mora: 10000,
+                primo: 1600,
+                resin: 300,
+                last_used_resin_time: new Date,
+                daily: 1,
+                last_used_boss_time: 0,
+                last_used_daily_time: new Date,
+                character_name: [],
+                character: {},
+            }
+
+            var query = { id: user.id };
+            var update = { $set: traveller }
+            var option = { upsert: true };
+
+            dbo.collection("travellers").updateOne(query, update, option, function(err,res) {
+                if (err) throw err;
+                console.log("New member just joined!");
+                db.close();
+            });
+        });
+    },
+        
+
     create_traveller: function(message) {
         create_traveller(message);
     },
 
-    view_profile: function(message) {
-        var traveller = get_traveller_data(message);
-        if (!traveller) return message.channel.send('You havent register the adventure');;
+    view_profile: async function(message) {
+        var user = message.author;
+
+        // load traveller data  if any
+        var traveller = await load_traveller_data(user);
+        if (traveller == null) return console.log("You havent join the guild");
 
         traveller = get_current_resin(traveller);
         view_profile(message, traveller);
 
         // save latest traveller data
-        utility.savedata(message, traveller); 
+        save_traveller_data(user, traveller);
     },
 
-    claim_daily: function(message) {
-        var traveller = get_traveller_data(message);
-        if (!traveller) return message.channel.send('You havent register the adventure');;
+    claim_daily: async function(message) {
+        var user = message.author;
+
+        // load traveller data  if any
+        var traveller = await load_traveller_data(user);
+        if (traveller == null) return console.log("You havent join the guild");
 
         traveller = adventure.claim_daily(message, traveller);
 
         // save latest traveller data
-        utility.savedata(message, traveller);   
+        save_traveller_data(user, traveller);
     },
 
-    hunt: function(message, quantity = 1) {
+    hunt: async function(message, quantity = 1) {
         // error checking
         if (!Number(quantity)) return message.channel.send('Incorrect input');
         if (quantity < 0) return message.channel.send('Incorrect input');
 
-        var traveller = get_traveller_data(message);
-        if (!traveller) return message.channel.send('You havent register the adventure');;
+        var user = message.author;
+
+        // load traveller data  if any
+        var traveller = await load_traveller_data(user);
+        if (traveller == null) return console.log("You havent join the guild");
 
         // get current resin
         traveller = get_current_resin(traveller);
@@ -188,7 +275,7 @@ module.exports = {
         traveller = adventure.hunt(message, traveller, quantity);
 
         // save latest traveller data
-        utility.savedata(message, traveller); 
+        save_traveller_data(user, traveller);
     },
 
     roll_character: function(message, quantity = 1) {
