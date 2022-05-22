@@ -15,11 +15,12 @@ exports.ATTACK_4STAR = 50;
 exports.HP_5STAR = 500;
 exports.HP_4STAR = 250;
 
-// artifact RNG
-exports.ARTIFACT_HP = [-1, 1];
-exports.ARTIFACT_ATK = [-1, 1];
-exports.ARTIFACT_CRIT_RATE = [-2, 2];
-exports.ARTIFACT_CRIT_DMG = [-2, 2];
+// artifact RNG in percent
+exports.MAX_MORA_ROLL = 10000;
+exports.ARTIFACT_HP = 20;
+exports.ARTIFACT_ATK = 20;
+exports.ARTIFACT_DEF = 20;
+exports.ARTIFACT_EVA = 5;
 
 // battle part
 exports.BOSS_NAME = ['Stormterror Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun'];

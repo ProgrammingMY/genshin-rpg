@@ -195,6 +195,7 @@ module.exports = {
 
             var traveller = {
                 id: user.id,
+                guild_id: message.guild.id,
                 name: user.username,
                 atk: 100,
                 hp: 1000,

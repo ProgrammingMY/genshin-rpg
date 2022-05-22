@@ -1,72 +1,17 @@
-const Discord = require('discord.js');
 require('dotenv').config();
+const Discord = require('discord.js');
+//const variable = require('./variable.js');
+const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MESSAGES"] });
 
-const bot = new Discord.Client();
-const token = process.env.DISCORD_KEY; 
-const PREFIX = '.';
+client.commands = new Discord.Collection();
+client.events = new Discord.Collection();
+client.utils = new Discord.Collection();
+client.PREFIX = '.';
 
-const Game = require('./game.js');
-const utility = require('./utility.js');
-
-bot.on('ready', () => {
-    bot.user.setActivity('.help to get started');
-    console.log('weibot is online!');
-});
-
-bot.on('message', async message => {
-    if(!message.content.startsWith(PREFIX) || message.author.bot) return;
-
-    const args = message.content.slice(PREFIX.length).split(/ +/);
-
-    switch(args[0]) {
-        case 'c':
-            Game.test(message);
-        break;
-        case 'create':
-            Game.create_traveller(message);
-        break;
-
-        case 'profile':
-        case 'p':
-            Game.view_profile(message);
-        break;
-
-        case 'daily':
-            Game.claim_daily(message);
-        break;
-
-        case 'hunt':
-            Game.hunt(message, args[1]);
-        break;
-
-        case 'pull':
-            Game.roll_character(message, args[1]);
-        break;
-
-        case 'boss':
-            Game.boss_fight(message);
-        break;
-
-        case 'fight':
-            Game.traveller_fight(message, message.mentions.members.first());
-        break;
-
-        case 'char':
-            Game.view_inventory(message);
-        break;
-
-        case 'gamba':
-            Game.roll_artifact(message, args[1]);
-        break;
-
-        case 'rank':
-            Game.view_leaderboard(message);
-        break;
-
-        case 'help':
-            utility.get_help(message);
-        break;
-    }
+['command_handler', 'event_handler', 'utils_handler'].forEach(handler =>{
+    require(`./handlers/${handler}`)(client, Discord);
 })
 
-bot.login(token);
+client.variable = require('./variable.js');
+
+client.login(process.env.DISCORD_KEY);

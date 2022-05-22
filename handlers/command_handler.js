@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dirs = ['Game_commands', 'Util_commands']
+const dirs = ['game_commands', 'util_commands']
 
 module.exports = (client, Discord) => {
     for(const dir of dirs){
