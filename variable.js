@@ -25,12 +25,15 @@ exports.ARTIFACT_DEF = 20;
 exports.ARTIFACT_EVA = 5;
 
 // battle part
-exports.BOSS_NAME = ['Stormterror Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun'];
-exports.BOSS_COST = 40;
-exports.BOSS_ATK_MULTIPLIER = 67;
-exports.BOSS_HP_MULTIPLIER = 629;
+exports.BOSS_NAME = ['Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun', 'Scaramouche', 'Azdaha'];
+exports.BOSS_COST = 30;
+exports.BOSS_ATK_MULTIPLIER = 120;
+exports.BOSS_HP_MULTIPLIER = 1200;
+exports.BOSS_DEF_MULTIPLIER = 12;
+exports.BOSS_EVASION = 15;
 exports.MORA_BOSS_MULTIPLIER = 629;
 exports.PRIMO_BOSS_MULTIPLIER = 10.1;
+exports.BOSS_EXP_REWARD = 1000;
 
 // genshin icon emote ID
 exports.PRIMO = `<:primo:810746619963768832>`;

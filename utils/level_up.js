@@ -1,7 +1,7 @@
 const variable = require('../variable.js');
 const Discord = require('discord.js');
 
-module.exports = async function (message, traveller, exp, result_embed){
+module.exports = function (message, traveller, exp){
     var next_level = traveller.lvl*variable.NEXT_LEVEL_EXP;
     traveller.exp += exp;
 
@@ -38,8 +38,7 @@ module.exports = async function (message, traveller, exp, result_embed){
         traveller.def = new_def;
 
         // send update embeds
-        const copy_result_embed = result_embed[0];
-        const new_result_embed = new Discord.MessageEmbed(copy_result_embed)
+        const new_result_embed = new Discord.MessageEmbed()
         .setColor('FFD700')
         .addField('Level up!:' , stats_list);
 

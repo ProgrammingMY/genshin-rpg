@@ -42,7 +42,7 @@ async function hunt (client, message, traveller, quantity) {
     message.channel.send({ embeds: [hunt_message]} );
 
     // check if traveller levels up
-    traveller = await level_up(message, traveller, exp, hunt_message);
+    traveller = level_up(message, traveller, exp);
 
     return traveller;
 }
