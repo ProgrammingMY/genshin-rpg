@@ -1,16 +1,20 @@
 const Discord = require('discord.js');
 const variable = require('../variable.js');
 
-function view_profile(message, user, traveller) {
+function view_profile(client, message, user, traveller) {
+    const progress_bar = client.utils.get('progress_bar');
     let stats_list = `:crossed_swords: ${traveller.atk} ❤️ ${traveller.hp} \n`;
     stats_list += `🛡️ ${traveller.def} 🏃 ${traveller.eva}%`;
 
+    // exp bar
+    let progress = progress_bar(traveller.exp, traveller.lvl*variable.NEXT_LEVEL_EXP, 10);
+    let next_exp = traveller.lvl*variable.NEXT_LEVEL_EXP;
 
     let profile = new Discord.MessageEmbed()
     .setColor('#0099ff')
     .setTitle(`${traveller.name}'s Adventure Profile`)
     .addFields(
-        {name:'Adventure', value:`Rank: ${traveller.rank}`},
+        {name:'Adventure', value:`Rank: ${traveller.rank} Level: ${traveller.lvl}\n${progress}${variable.EXP} ${traveller.exp} of ${next_exp}`},
         {name:'Stats', value: stats_list},
         {name:'Currency', value:`${variable.MORA} ${traveller.mora} ${variable.PRIMO}${traveller.primo} ${variable.RESIN}${traveller.resin}/300`}
     )
@@ -35,7 +39,7 @@ module.exports = {
         if (traveller == null) return message.channel.send("You havent join the guild");
 
         traveller = await get_current_resin(traveller);
-        view_profile(message, user, traveller);
+        view_profile(client, message, user, traveller);
 
         // save latest traveller data
         save_traveller_data(user, traveller);

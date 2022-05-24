@@ -1,5 +1,7 @@
 exports.RESIN_REFRESH_RATE = 60000; // 1 minute
 exports.HUNT_COST = 20;
+exports.HUNT_EXP = 20;
+exports.NEXT_LEVEL_EXP = 40;
 exports.MORA_REWARD_MULTIPLIER = 485.2;
 exports.PRIMO_REWARD_MULTIPLIER = 10.3;
 exports.MORA_DAILY_MULTIPLIER = 930.7;
@@ -34,3 +36,4 @@ exports.PRIMO_BOSS_MULTIPLIER = 10.1;
 exports.PRIMO = `<:primo:810746619963768832>`;
 exports.MORA = `<:mora:810746620076752917>`;
 exports.RESIN = `<:resin:810746618432323626>`;
+exports.EXP = `<:exp:810746619313520700>`;

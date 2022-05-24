@@ -17,8 +17,10 @@ module.exports = {
             name: user.username,
             atk: 100,
             hp: 1000,
-            def: 50,
+            def: 10,
             eva: 5,
+            lvl: 1,
+            exp: 0,
             rank: 1,
             pity: 0,
             mora: 10000,
@@ -33,7 +35,7 @@ module.exports = {
         }
 
         // update traveller data into the database
-        var result = save_traveller_data(user, traveller);
+        var result = await save_traveller_data(user, traveller);
         message.channel.send(user.username + ` has joined the Benny's Adventure Team!`);
         return result;
     }
