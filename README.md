@@ -11,7 +11,7 @@ This bot is not one to one gameplay structure to the actual game Genshin Impact.
 
 ## GET STARTED
 
-Use `.help` to get the latest list of commands availble.
+Use `.help` to get the latest list of commands available.
 
 ## Screenshot
 
