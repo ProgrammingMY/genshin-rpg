@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This project is just to realize my hobby and imagination during my childhood. If you ever made a game in your notebook when you was child, you probobaly can relate to this.
+This project is just to make my hobby and imagination during my childhood into reality. If you ever made a game in your notebook when you was child, you probobaly can relate to this.
 
 Disclaimer: This project is just to practice my Javascript and NoSQL databases management skills
 
