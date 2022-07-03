@@ -15,3 +15,4 @@ Use `.help` to get the latest list of commands available.
 
 ## Screenshot
 
+![alt text](https://user-images.githubusercontent.com/55706850/177034607-045e2296-98be-4602-9aaf-6065dc59f9a9.PNG)
