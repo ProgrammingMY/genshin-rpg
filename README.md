@@ -17,4 +17,4 @@ Use `.help` to get the latest list of commands available.
 
 ![alt text](https://user-images.githubusercontent.com/55706850/177034607-045e2296-98be-4602-9aaf-6065dc59f9a9.PNG)
 ![alt text](https://user-images.githubusercontent.com/55706850/177034779-f7268440-d902-48ed-b7fa-bbdeb15fcb8a.PNG)
-![alt text](https://user-images.githubusercontent.com/55706850/177037298-e267dd77-8362-4c57-860f-8a73e402bdd2.gif)
+![alt text](https://user-images.githubusercontent.com/55706850/177037542-2f8ecab4-2148-4a94-9972-82ab2e8896c2.gif)
