@@ -40,7 +40,7 @@ module.exports = function (message, traveller, exp){
         // send update embeds
         const new_result_embed = new Discord.MessageEmbed()
         .setColor('FFD700')
-        .addField('Level up!:' , stats_list);
+        .addFields('Level up!:' , stats_list);
 
         message.channel.send({ embeds: [new_result_embed] });
     }

@@ -41,7 +41,7 @@ module.exports = {
             var color = 'FF0000';
             traveller.resin -= variable.BOSS_COST;
 
-            // get reward
+            // get reward if win
             if (result) {
                 status =  'You Win and Ranked Up!';
                 color = '7CFC00';
@@ -62,9 +62,8 @@ module.exports = {
             let result_status = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle(`${traveller.name} VS ${boss.name}`)
-            .addField(status, reward_list)
-            .addField('Resin remaining:', `${variable.RESIN}\`${traveller.resin}/300\``)
-            msg_fight.edit( {embeds: [result_status]} );
+            .addFields({ name: status, value: reward_list }, { name:'Resin remaining:', value: `${variable.RESIN}\`${traveller.resin}/300\`` })
+            message.channel.send( {embeds: [result_status]} );
 
             // check if traveller levels up
             traveller = level_up(message, traveller, new_exp);

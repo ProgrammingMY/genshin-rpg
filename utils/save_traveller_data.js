@@ -1,4 +1,6 @@
 // import database management system
+// CREATE
+
 const MongoClient = require('mongodb').MongoClient;
 const MONGO_URL = "mongodb://localhost:27017/";
 const MONGO_DB = "genshinDB"

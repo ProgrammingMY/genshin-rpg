@@ -47,46 +47,43 @@ module.exports = function (client, message, traveller, opponent, callback){
         // send fight live update
         var fight_message = new Discord.MessageEmbed()
         .setTitle(fight_title)
-        message.channel.send( {embeds: [fight_message]} ).then(message => {
-            msg_fight = message;
-        });
-
-        var i = setInterval(function(){
-            // traveller turn
-            [damage, traveller_logs] = get_damage_value(traveller, opponent);
-            opponent_hp -= damage;
-            if (opponent_hp <= 0) {
-                opponent_hp = 0;
-            }
-            opponent_hp_bar = progress_bar(opponent_hp, opponent_max_hp, 10);
-            opponent_hp_bar += `${opponent_hp}/${opponent_max_hp}`;      
-
-            // boss turn
-            [damage, opponent_logs] = get_damage_value(opponent, traveller);
-            traveller_hp -= damage;
-            if (traveller_hp <= 0){
-                traveller_hp = 0;
-            } 
-            traveller_hp_bar = progress_bar(traveller_hp, traveller_max_hp, 10);
-            traveller_hp_bar += `${traveller_hp}/${traveller_max_hp}`;
-            
-            let update_hp = new Discord.MessageEmbed()
-            .setTitle(fight_title)
-            .addField(`${traveller.name} HP`, traveller_hp_bar)
-            .addField(`${opponent.name} HP`, opponent_hp_bar)
-            .setDescription(`${traveller_logs}\n${opponent_logs}`)
-            msg_fight.edit( {embeds: [update_hp]} );
-
-
-            if (opponent_hp === 0) {
-                clearInterval(i);
-                callback(true);
-            }
-            else if (traveller_hp === 0) {
-                clearInterval(i);
-                callback(false);
-            }
-        }, interval);
-    })
+        message.channel.send( {embeds: [fight_message]} ).then(embedMessage => {
+            var i = setInterval(function(){
+                // traveller turn
+                [damage, traveller_logs] = get_damage_value(traveller, opponent);
+                opponent_hp -= damage;
+                if (opponent_hp <= 0) {
+                    opponent_hp = 0;
+                }
+                opponent_hp_bar = progress_bar(opponent_hp, opponent_max_hp, 10);
+                opponent_hp_bar += `${opponent_hp}/${opponent_max_hp}`;      
     
+                // boss turn
+                [damage, opponent_logs] = get_damage_value(opponent, traveller);
+                traveller_hp -= damage;
+                if (traveller_hp <= 0){
+                    traveller_hp = 0;
+                } 
+                traveller_hp_bar = progress_bar(traveller_hp, traveller_max_hp, 10);
+                traveller_hp_bar += `${traveller_hp}/${traveller_max_hp}`;
+                
+                let update_hp = new Discord.MessageEmbed()
+                .setTitle(fight_title)
+                .addFields({ name: `${traveller.name} HP`, value: traveller_hp_bar },
+                { name: `${opponent.name} HP`, value: opponent_hp_bar })
+                .setDescription(`${traveller_logs}\n${opponent_logs}`)
+                embedMessage.edit( {embeds: [update_hp]} );
+    
+    
+                if (opponent_hp === 0) {
+                    clearInterval(i);
+                    callback(true);
+                }
+                else if (traveller_hp === 0) {
+                    clearInterval(i);
+                    callback(false);
+                }
+            }, interval);
+        });  
+    })
 }

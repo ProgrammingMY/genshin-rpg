@@ -34,6 +34,7 @@ exports.BOSS_EVASION = 15;
 exports.MORA_BOSS_MULTIPLIER = 629;
 exports.PRIMO_BOSS_MULTIPLIER = 10.1;
 exports.BOSS_EXP_REWARD = 1000;
+exports.PVP_REWARD = 0.1;
 
 // genshin icon emote ID
 exports.PRIMO = `<:primo:810746619963768832>`;
