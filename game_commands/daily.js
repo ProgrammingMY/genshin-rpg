@@ -12,7 +12,7 @@ module.exports = {
         const progress_bar = client.utils.get('progress_bar');
 
         // load traveller data  if any
-        var traveller = await load_traveller_data(user);
+        var traveller = await load_traveller_data(user, message.guild.id);
         if (traveller == null) return console.log("You havent join the guild");
 
         // check daily
@@ -26,8 +26,8 @@ module.exports = {
         // daily reward already claimed
         if (remaining_time == 0) {
             var streak = 0;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.rank);
-            var new_primo = Math.floor(streak * variable.PRIMO_DAILY_MULTIPLIER * traveller.rank);
+            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'Already claimed for today, please comeback tomorrow!';
         }
         // daily reward havent claimed for today
@@ -35,28 +35,27 @@ module.exports = {
             traveller.daily += 1;
             traveller.last_used_daily_time = today;
             var streak = traveller.daily;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.rank);
-            var new_primo = Math.floor(streak * variable.PRIMO_DAILY_MULTIPLIER * traveller.rank);
+            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'You have succesfully claimed your daily rewards!';
             traveller.mora += new_mora;
-            traveller.primo += new_primo;
+            traveller.exp += new_exp;
         } 
         // daily reward streak missed
         else {
             traveller.daily = 1;
             traveller.last_used_daily_time = today;
             var streak = traveller.daily;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.rank);
-            var new_primo = Math.floor(streak * variable.PRIMO_DAILY_MULTIPLIER * traveller.rank);
+            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'You lose the daily reward streak!'
             traveller.mora += new_mora;
-            traveller.primo += new_primo;
+            traveller.exp += new_exp;
         }
 
         let progress = progress_bar(traveller.daily, 10, 10);
 
         let reward_list = variable.MORA + `\`+${new_mora} mora\`` + '\n';
-        reward_list += variable.PRIMO + `\`+${new_primo} primogems\`` + '\n';
 
         let daily_message = new Discord.MessageEmbed()
         .setColor('FFD700')

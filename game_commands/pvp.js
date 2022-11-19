@@ -16,9 +16,9 @@ module.exports = {
         if (!args[0]) return message.channel.send("Please mention your opponent username");
 
         // load traveller data  if any
-        var traveller = await load_traveller_data(user);
+        var traveller = await load_traveller_data(user, message.guild.id);
         if (traveller == null) return message.channel.send("You havent join the guild");
-        var opponent = await load_traveller_data(rival);
+        var opponent = await load_traveller_data(rival, message.guild.id);
         if (opponent == null) return message.channel.send("Your opponent havent join the guild");
 
         // get to the fight

@@ -5,7 +5,7 @@ exports.NEXT_LEVEL_EXP = 40;
 exports.MORA_REWARD_MULTIPLIER = 485.2;
 exports.PRIMO_REWARD_MULTIPLIER = 10.3;
 exports.MORA_DAILY_MULTIPLIER = 930.7;
-exports.PRIMO_DAILY_MULTIPLIER = 20.1;
+exports.EXP_DAILY_MULTIPLIER = 50;
 exports.REWARD_RANGE = 0.05;
 exports.ATTACK_RANGE = 0.02;
 
@@ -18,14 +18,13 @@ exports.HP_5STAR = 500;
 exports.HP_4STAR = 250;
 
 // artifact RNG in percent
-exports.MAX_MORA_ROLL = 10000;
 exports.ARTIFACT_HP = 20;
 exports.ARTIFACT_ATK = 20;
 exports.ARTIFACT_DEF = 20;
 exports.ARTIFACT_EVA = 5;
 
 // battle part
-exports.BOSS_NAME = ['Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun', 'Scaramouche', 'Azdaha'];
+exports.BOSS_NAME = ['Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun', 'Scaramouche', 'Azhdaha'];
 exports.BOSS_COST = 30;
 exports.BOSS_ATK_MULTIPLIER = 120;
 exports.BOSS_HP_MULTIPLIER = 1200;

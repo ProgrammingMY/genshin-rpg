@@ -13,7 +13,7 @@ module.exports = {
         const battle = client.utils.get('battle');
 
         // load traveller data  if any
-        var traveller = await load_traveller_data(user);
+        var traveller = await load_traveller_data(user, message.guild.id);
         if (traveller == null) return console.log("You havent join the guild");
         traveller = await get_current_resin(traveller);
 
@@ -26,15 +26,14 @@ module.exports = {
         let boss_name = variable.BOSS_NAME[Math.floor(Math.random() * variable.BOSS_NAME.length)];
         var boss = {
             name: boss_name,
-            atk: variable.BOSS_ATK_MULTIPLIER * traveller.rank,
-            hp: variable.BOSS_HP_MULTIPLIER * traveller.rank,
-            def: variable.BOSS_DEF_MULTIPLIER * traveller.rank,
+            atk: variable.BOSS_ATK_MULTIPLIER * traveller.lvl,
+            hp: variable.BOSS_HP_MULTIPLIER * traveller.lvl,
+            def: variable.BOSS_DEF_MULTIPLIER * traveller.lvl,
             eva: variable.BOSS_EVASION
         }
         // get to the fight
         battle(client, message, traveller, boss, function(result) {
             const level_up = client.utils.get('level_up');
-            var new_primo = 0;
             var new_mora = 0;
             var new_exp = 0;
             var status =  'You Lose';
@@ -45,31 +44,30 @@ module.exports = {
             if (result) {
                 status =  'You Win and Ranked Up!';
                 color = '7CFC00';
-                traveller.rank += 1;
-                new_primo = Math.floor(variable.PRIMO_BOSS_MULTIPLIER * traveller.rank);
-                new_mora = Math.floor(variable.MORA_BOSS_MULTIPLIER * traveller.rank);
+                new_mora = Math.floor(variable.MORA_BOSS_MULTIPLIER * traveller.lvl);
                 new_exp = variable.BOSS_EXP_REWARD;
-                traveller.primo += new_primo;
                 traveller.mora += new_mora;
                 traveller.exp += new_exp;
             }
 
             let reward_list = variable.MORA + `\`+${new_mora} mora\`\n`;
-            reward_list += variable.PRIMO + `\`+${new_primo} primogems\`\n`;
             reward_list += variable.EXP + `\`+${new_exp} exp\`\n`;
             reward_list += variable.RESIN + `\`-${variable.BOSS_COST} resin\``;
 
             let result_status = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle(`${traveller.name} VS ${boss.name}`)
-            .addFields({ name: status, value: reward_list }, { name:'Resin remaining:', value: `${variable.RESIN}\`${traveller.resin}/300\`` })
+            .addFields(
+                { name: status, value: reward_list }, 
+                { name:'Resin remaining:', value: `${variable.RESIN}\`${traveller.resin}/300\`` }
+            )
             message.channel.send( {embeds: [result_status]} );
 
             // check if traveller levels up
-            traveller = level_up(message, traveller, new_exp);
+            //traveller = level_up(message, traveller, new_exp);
 
             // save latest traveller data
-            save_traveller_data(user, traveller);
+            //save_traveller_data(user, traveller);
         });
     }
 }

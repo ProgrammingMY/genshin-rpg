@@ -1,0 +1,15 @@
+{
+    "TableName" : "Travellers",
+    "KeySchema": [       
+        { "AttributeName": "guildid", "KeyType": "HASH"},
+        { "AttributeName": "id", "KeyType": "RANGE"}
+    ],
+    "AttributeDefinitions": [       
+        { "AttributeName": "guildid", "AttributeType": "S" },
+        { "AttributeName": "id", "AttributeType": "S"}
+    ],
+    "ProvisionedThroughput": {       
+        "ReadCapacityUnits": 10, 
+        "WriteCapacityUnits": 10
+    }
+}

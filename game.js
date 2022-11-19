@@ -55,8 +55,6 @@ function create_traveller(message) {
             name: user.username,
             atk: 100,
             hp: 1000,
-            crit_rate: 0,
-            crit_dmg: 0,
             rank: 1,
             pity: 0,
             mora: 10000,

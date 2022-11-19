@@ -35,7 +35,7 @@ async function hunt (client, message, traveller, quantity) {
     let hunt_message = new Discord.MessageEmbed()
     .setColor('00FF00')
     .setTitle('Hunting Done!')
-    .setDescription('You went hunting with Bennett and receive following rewards')
+    .setDescription('You went hunting and receive following rewards')
     .addField('Rewards:' , reward_list)
     .addField('Resin remaining:' , remaining_resin);
 
@@ -65,7 +65,7 @@ module.exports = {
         const get_current_resin = client.utils.get('get_current_resin');
 
         // load traveller data  if any
-        var traveller = await load_traveller_data(user);
+        var traveller = await load_traveller_data(user, message.guild.id);
         if (traveller == null) return console.log("You havent join the guild");
         traveller = await get_current_resin(traveller);
 

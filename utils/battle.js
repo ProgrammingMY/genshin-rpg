@@ -69,8 +69,10 @@ module.exports = function (client, message, traveller, opponent, callback){
                 
                 let update_hp = new Discord.MessageEmbed()
                 .setTitle(fight_title)
-                .addFields({ name: `${traveller.name} HP`, value: traveller_hp_bar },
-                { name: `${opponent.name} HP`, value: opponent_hp_bar })
+                .addFields(
+                    { name: `${traveller.name} HP`, value: traveller_hp_bar },
+                    { name: `${opponent.name} HP`, value: opponent_hp_bar }
+                )
                 .setDescription(`${traveller_logs}\n${opponent_logs}`)
                 embedMessage.edit( {embeds: [update_hp]} );
     

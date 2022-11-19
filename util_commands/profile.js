@@ -7,21 +7,21 @@ function view_profile(client, message, user, traveller) {
     stats_list += `🛡️ ${traveller.def} 🏃 ${traveller.eva}%`;
 
     // exp bar
-    let progress = progress_bar(traveller.exp, traveller.lvl*variable.NEXT_LEVEL_EXP, 10);
-    let next_exp = traveller.lvl*variable.NEXT_LEVEL_EXP;
+    let progress = progress_bar(traveller.exp, traveller.lvl * variable.NEXT_LEVEL_EXP, 10);
+    let next_exp = traveller.lvl * variable.NEXT_LEVEL_EXP;
 
     let profile = new Discord.MessageEmbed()
-    .setColor('#0099ff')
-    .setTitle(`${traveller.name}'s Adventure Profile`)
-    .addFields(
-        {name:'Adventure', value:`Rank: ${traveller.rank} Level: ${traveller.lvl}\n${progress}${variable.EXP} ${traveller.exp} of ${next_exp}`},
-        {name:'Stats', value: stats_list},
-        {name:'Currency', value:`${variable.MORA} ${traveller.mora} ${variable.PRIMO}${traveller.primo} ${variable.RESIN}${traveller.resin}/300`}
-    )
-    .setThumbnail(user.avatarURL())
+        .setColor('#0099ff')
+        .setTitle(`${traveller.name}'s Profile`)
+        .addFields(
+            { name: 'Adventure', value: `Level: ${traveller.lvl}\n${progress}${variable.EXP} ${traveller.exp} of ${next_exp}` },
+            { name: 'Stats', value: stats_list },
+            { name: 'Currency', value: `${variable.MORA} ${traveller.mora} ${variable.RESIN}${traveller.resin}/300` }
+        )
+        .setThumbnail(user.avatarURL())
 
 
-    message.channel.send({ embeds: [profile]});
+    message.channel.send({ embeds: [profile] });
 }
 
 module.exports = {
@@ -35,13 +35,15 @@ module.exports = {
         const get_current_resin = client.utils.get('get_current_resin');
 
         // load traveller data  if any
-        var traveller = await load_traveller_data(user);
-        if (traveller == null) return message.channel.send("You havent join the guild");
+        let traveller = await load_traveller_data(user, message.guild.id);
+        if (traveller == null) {
+            return message.channel.send("You havent join the guild");
+        }
 
         traveller = await get_current_resin(traveller);
         view_profile(client, message, user, traveller);
 
         // save latest traveller data
-        save_traveller_data(user, traveller);
+        //save_traveller_data(user, traveller);
     }
 }
