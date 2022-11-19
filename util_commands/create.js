@@ -26,7 +26,6 @@ module.exports = {
             resin: 300,
             last_used_resin_time: today.toISOString(),
             daily: 1,
-            last_used_boss_time: 0,
             last_used_daily_time: today.toISOString(),
         }
 

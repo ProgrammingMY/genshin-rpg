@@ -1,7 +1,7 @@
 exports.RESIN_REFRESH_RATE = 60000; // 1 minute
 exports.HUNT_COST = 20;
 exports.HUNT_EXP = 20;
-exports.NEXT_LEVEL_EXP = 40;
+exports.NEXT_LEVEL_EXP = 50;
 exports.MORA_REWARD_MULTIPLIER = 485.2;
 exports.PRIMO_REWARD_MULTIPLIER = 10.3;
 exports.MORA_DAILY_MULTIPLIER = 930.7;

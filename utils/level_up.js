@@ -42,8 +42,12 @@ module.exports = function (message, traveller){
         // send update embeds
         const new_result_embed = new Discord.MessageEmbed()
         .setColor('FFD700')
-        .addFields(`${traveller.name} leveled up!:` , stats_list);
+        .addFields( 
+            { name: `${traveller.name} leveled up!:` , value: stats_list}
+        )
 
-        return message.channel.send({ embeds: [new_result_embed] });
+        message.channel.send({ embeds: [new_result_embed] });
+
+        return traveller;
     }
 }

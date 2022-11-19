@@ -8,7 +8,7 @@ module.exports = async function (traveller) {
 
         // update traveller data
         traveller.resin += new_resin;
-        traveller.last_used_resin_time = new Date;
+        traveller.last_used_resin_time = today.toISOString();
 
         // if overcapped
         if (traveller.resin > 300) traveller.resin = 300;
