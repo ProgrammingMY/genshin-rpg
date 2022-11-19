@@ -1,12 +1,14 @@
 const variable = require('../variable.js');
 const Discord = require('discord.js');
 
-module.exports = function (message, traveller, exp){
+module.exports = function (message, traveller){
     var next_level = traveller.lvl*variable.NEXT_LEVEL_EXP;
-    traveller.exp += exp;
 
+    // check if traveller level up
+    if (traveller.exp < next_level) {
+        return traveller;
+    } else {
     // traveller level up
-    if (traveller.exp >= next_level) {
         stats_list = '';
         new_lvl = traveller.lvl
         new_atk = traveller.atk;
@@ -40,10 +42,8 @@ module.exports = function (message, traveller, exp){
         // send update embeds
         const new_result_embed = new Discord.MessageEmbed()
         .setColor('FFD700')
-        .addFields('Level up!:' , stats_list);
+        .addFields(`${traveller.name} leveled up!:` , stats_list);
 
-        message.channel.send({ embeds: [new_result_embed] });
+        return message.channel.send({ embeds: [new_result_embed] });
     }
-
-    return traveller;
 }

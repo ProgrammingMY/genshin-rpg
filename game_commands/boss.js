@@ -64,7 +64,7 @@ module.exports = {
             message.channel.send( {embeds: [result_status]} );
 
             // check if traveller levels up
-            //traveller = level_up(message, traveller, new_exp);
+            traveller = level_up(message, traveller);
 
             // save latest traveller data
             //save_traveller_data(user, traveller);
