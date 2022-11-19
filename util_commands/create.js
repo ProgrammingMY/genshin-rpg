@@ -32,5 +32,6 @@ module.exports = {
 
         // update traveller data into the database
         save_traveller_data(user, traveller);
+        return message.channel.send(`Hi ${traveller.name}, welcome!`);
     }
 }

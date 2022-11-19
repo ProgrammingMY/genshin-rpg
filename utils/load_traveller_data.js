@@ -18,13 +18,17 @@ module.exports = async function (user, guildid) {
             TableName: "Travellers",
         };
 
+        // query the data
         docClient.get(params, function (err, data) {
             if (err) {
                 console.error("Unable to retrieve the data", err);
-                reject();
-            } else {
-                console.log(`Data found, ${user.username}`);
+                resolve(null);
+            }
+            else if (data.Item) {
                 resolve(data.Item.data);
+            }
+            else {
+                resolve(null);
             }
         });
     })
