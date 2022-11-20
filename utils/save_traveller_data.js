@@ -9,15 +9,19 @@ AWS.config.update({
 module.exports = async function (user, traveller) {
     var docClient = new AWS.DynamoDB.DocumentClient();
 
+    // set parameters to save in the database
     const params = {
         TableName: "Travellers",
         Item: {
             "guildid": traveller.guildid,
             "id": traveller.id,
+            "lvl": traveller.lvl,
+            "name": traveller.name,
             "data": traveller
         }
     };
 
+    // store the data
     docClient.put(params, function (err) {
         if (err) {
             console.error("Unable to add traveller", err);

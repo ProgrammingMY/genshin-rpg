@@ -1,36 +1,66 @@
 // import database management system
-const MongoClient = require('mongodb').MongoClient;
-const MONGO_URL = "mongodb://localhost:27017/";
-const MONGO_DB = "genshinDB";
+var AWS = require("aws-sdk");
+
+// Use a DynamoDB Local endpoint
+AWS.config.update({
+    region: "Singapore",
+    endpoint: "http://localhost:8080"
+});
+
+// get all travellers data in the same guild
+async function get_travellers_data(guildid) {
+    return new Promise((resolve, reject) => {
+        // connect to dynamodb client
+        var docClient = new AWS.DynamoDB.DocumentClient();
+
+        // query from the local secondary index
+        var params = {
+            ExpressionAttributeValues: {
+                ':hashkey': guildid
+            },
+            KeyConditionExpression: 'guildid = :hashkey',
+            TableName: 'Travellers',
+            IndexName: 'GuildRank',
+            ScanIndexForward: false
+        };
+
+
+        // query the data
+        docClient.query(params, function (err, data) {
+            if (err) {
+                console.error("Error when run rank.js", err);
+                resolve(null);
+            }
+            else if (data.Items) {
+                resolve(data);
+            }
+            else {
+                resolve(null);
+            }
+        });
+    });
+}
 
 module.exports = {
     name: 'rank',
     //aliases
     description: 'See where are you in the leaderboard!',
     async execute(client, message, args) {
-        // connect to mongo client
-        const mongo_client = MongoClient.connect(MONGO_URL);
-        const travellers = (await mongo_client).db(MONGO_DB).collection("travellers");
-
-        // update traveller data into the database
-        var query = { guild_id: message.guild.id };
-        var sorting = { sort: { rank: 1 }, projection: { _id:0, name: 1, rank: 1 } };
-        var limit = 10;
-
-        // list top 10 player
-        var travellers_list = await travellers.find(query, sorting).limit(limit).toArray();
-        let total_travellers = travellers_list.length;
+        // get all data in the same guild
+        var travellers_list = await get_travellers_data(message.guild.id);
+        var travellers = travellers_list.Items;
+        var total_travellers = travellers_list.Count;
         let spaces = ' ';
         let repeats = 0;
         let spacing = 30;
 
-        // display the guild leaderboard
+        // display the leaderboard
         let leaderboard_title = `${message.guild.name} Leaderboard`;
         let travellers_ranking = '';
         for (var i = 0; i < total_travellers; i++) {
-            repeats = spacing - travellers_list[i].name.length;
-            travellers_ranking += `${i+1}. ` + travellers_list[i].name;
-            travellers_ranking += `${spaces.repeat(repeats)}Rank ` + travellers_list[i].rank + '\n';
+            repeats = spacing - travellers[i].name.length;
+            travellers_ranking += `${i+1}. ` + travellers[i].name;
+            travellers_ranking += `${spaces.repeat(repeats)}Rank ` + travellers[i].lvl + '\n';
         }
 
         message.channel.send(`\`\`\`css\n${leaderboard_title}\n\n${travellers_ranking}\`\`\``);

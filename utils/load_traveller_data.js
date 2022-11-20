@@ -10,23 +10,27 @@ module.exports = async function (user, guildid) {
     return new Promise(function (resolve, reject) {
         var docClient = new AWS.DynamoDB.DocumentClient();
 
+        // set query parameters from user id
         const params = {
-            Key: {
-                "guildid": guildid,
-                "id": user.id
+            ExpressionAttributeValues: {
+                ':hashkey': guildid,
+                ':rangekey': user.id
             },
-            TableName: "Travellers",
+            KeyConditionExpression: 'guildid = :hashkey and id = :rangekey',
+            TableName: 'Travellers',
         };
 
         // query the data
-        docClient.get(params, function (err, data) {
+        docClient.query(params, function (err, data) {
             if (err) {
                 console.error("Unable to retrieve the data", err);
                 resolve(null);
             }
-            else if (data.Item) {
-                resolve(data.Item.data);
+            // when data exist
+            else if (data.Items) {
+                resolve(data.Items[0].data);
             }
+            // data not exist
             else {
                 resolve(null);
             }

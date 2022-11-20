@@ -52,7 +52,9 @@ module.exports = {
             let result_status = new Discord.MessageEmbed()
             .setColor(color)
             .setTitle(`${traveller.name} VS ${opponent.name}`)
-            .addFields({ name: status, value: reward_list})
+            .addFields(
+                { name: status, value: reward_list}
+            )
             message.channel.send({ embeds: [result_status] });
 
             // save latest traveller data

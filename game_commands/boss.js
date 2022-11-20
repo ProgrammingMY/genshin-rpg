@@ -67,7 +67,7 @@ module.exports = {
             traveller = level_up(message, traveller);
 
             // save latest traveller data
-            //save_traveller_data(user, traveller);
+            save_traveller_data(user, traveller);
         });
     }
 }
