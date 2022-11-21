@@ -33,13 +33,13 @@ module.exports = {
             if (result) {
                 // traveller wins and set reward
                 status =  `${traveller.name} Wins!`;
-                new_mora = Math.floor(opponent.mora * variable.PVP_REWARD);
+                new_mora = Math.ceil(opponent.mora * variable.PVP_REWARD);
                 traveller.mora += new_mora;
                 opponent.mora -= new_mora;
             } else {
                 // opponent wins and set reward
                 status =  `${opponent.name} Wins!`;
-                new_mora = Math.floor(traveller.mora * variable.PVP_REWARD);
+                new_mora = Math.ceil(traveller.mora * variable.PVP_REWARD);
                 traveller.mora -= new_mora;
                 opponent.mora += new_mora;
             }
