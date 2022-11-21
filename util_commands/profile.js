@@ -44,6 +44,6 @@ module.exports = {
         view_profile(client, message, user, traveller);
 
         // save latest traveller data
-        //save_traveller_data(user, traveller);
+        save_traveller_data(user, traveller);
     }
 }

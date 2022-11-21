@@ -19,9 +19,9 @@ module.exports = function (message, traveller){
         while (traveller.exp >= next_level) {
             // upgrade stats
             new_lvl = new_lvl+1;
-            new_atk = Math.floor(new_atk * (1 + (variable.ARTIFACT_ATK/200)));
-            new_hp = Math.floor(new_hp * (1 + (variable.ARTIFACT_HP/200)));
-            new_def = Math.floor(new_def * (1 + (variable.ARTIFACT_DEF/200)));
+            new_atk = Math.floor(new_atk * (1 + variable.NEXT_LEVEL_ATK));
+            new_hp = Math.floor(new_hp * (1 + variable.NEXT_LEVEL_HP));
+            new_def = Math.floor(new_def * (1 + variable.NEXT_LEVEL_DEF));
 
             traveller.exp = traveller.exp - next_level;
             next_level = new_lvl*variable.NEXT_LEVEL_EXP;
