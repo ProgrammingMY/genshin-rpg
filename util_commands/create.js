@@ -4,9 +4,10 @@ module.exports = {
     async execute(client, message, args) {
         var user = message.author;
         const save_traveller_data = client.utils.get('save_traveller_data');
+        const load_traveller_data = client.utils.get('load_traveller_data');
 
         // load traveller data  if any
-        //var traveller = await load_traveller_data(user);
+        var traveller = await load_traveller_data(user, message.guild.id);
         if (traveller != null) return message.channel.send("You already joined the guild!");
 
         let today = new Date;

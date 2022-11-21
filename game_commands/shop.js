@@ -12,19 +12,26 @@ function update_traveller_attribute(save_traveller_data, message, items, selecti
     var old_def = traveller.def;
     var old_hp = traveller.hp;
     var old_eva = traveller.eva;
+    var old_mora = traveller.mora;
+    var old_resin = traveller.resin;
 
     // update traveller
-    traveller.atk += Math.floor(traveller.atk * (item.atk / 100));
-    traveller.def += Math.floor(traveller.def * (item.def / 100));
-    traveller.hp += Math.floor(traveller.hp * (item.hp / 100));
+    traveller.atk += Math.ceil(traveller.atk * (item.atk / 100));
+    traveller.def += Math.ceil(traveller.def * (item.def / 100));
+    traveller.hp += Math.ceil(traveller.hp * (item.hp / 100));
     traveller.eva = (traveller.eva + item.eva) < 0 ? 0 : traveller.eva += item.eva;
-    traveller.eva = (traveller.eva) > 100 ? 100 : traveller.eva;
+    traveller.eva = (traveller.eva) > 90 ? 90 : traveller.eva;
+    traveller.mora -= item.mora;
+    traveller.resin -= variable.SHOP_COST;
 
     // upgrade message
     stats_list += `\n\`ATK: ${old_atk} -> ${traveller.atk}\``;
     stats_list += `\n\`DEF: ${old_def} -> ${traveller.def}\``;
     stats_list += `\n\`HP: ${old_hp} -> ${traveller.hp}\``;
     stats_list += `\n\`EVASION: ${old_eva} -> ${traveller.eva}\``;
+    stats_list += `\n ${variable.MORA} \`${old_mora} -> ${traveller.mora}\``;
+    stats_list += `\n ${variable.RESIN} \`${old_resin} -> ${traveller.resin}\``;
+
 
     // send update embeds
     const new_result_embed = new Discord.MessageEmbed()
@@ -48,13 +55,17 @@ module.exports = {
         var user = message.author;
         const get_random_value = client.utils.get('get_random_value');
         const load_traveller_data = client.utils.get('load_traveller_data');
-        var save_traveller_data = client.utils.get('save_traveller_data');
+        const save_traveller_data = client.utils.get('save_traveller_data');
+        const get_current_resin = client.utils.get('get_current_resin');
 
-        //load traveller data
         // load traveller data  if any
-        let traveller = await load_traveller_data(user, message.guild.id);
-        if (traveller == null) {
-            return message.channel.send("You havent join the guild");
+        var traveller = await load_traveller_data(user, message.guild.id);
+        if (traveller == null) return message.channel.send("You havent join the guild");
+        traveller = await get_current_resin(traveller);
+
+        // check if enough resin
+        if (traveller.resin < variable.SHOP_COST) {
+            return message.channel.send(`You do not have enough resin. ${variable.RESIN} ${variable.SHOP_COST} required`);
         }
 
         // create 3 items with attributes
@@ -67,17 +78,19 @@ module.exports = {
         let items_att = [];
         items.forEach(item => {
             let attributes = '';
-            item.atk = get_random_value(-variable.ARTIFACT_ATK, variable.ARTIFACT_ATK);
-            attributes += ':crossed_swords: ' + (item.atk < 0 ? "" : "+") + item.atk;
+            item.atk = get_random_value(0, variable.ARTIFACT_ATK);
+            attributes += ` :crossed_swords: \`+${item.atk}%\``;
 
-            item.def = get_random_value(-variable.ARTIFACT_DEF, variable.ARTIFACT_DEF);
-            attributes += '🛡️' + (item.def < 0 ? "" : "+") + item.def;
+            item.def = get_random_value(0, variable.ARTIFACT_DEF);
+            attributes += ` 🛡️ \`+${item.def}%\``;
 
-            item.hp = get_random_value(-variable.ARTIFACT_HP, variable.ARTIFACT_HP);
-            attributes += '❤️' + (item.hp < 0 ? "" : "+") + item.hp;
+            item.hp = get_random_value(0, variable.ARTIFACT_HP);
+            attributes += ` ❤️ \`+${item.hp}%\``;
 
             item.eva = get_random_value(-variable.ARTIFACT_EVA, variable.ARTIFACT_EVA);
-            attributes += '🏃' + (item.eva < 0 ? "" : "+") + item.eva;
+            attributes += ` 🏃 \`${(item.eva < 0 ? "" : "+")}${item.eva}%\``;
+
+            item.mora = Math.floor((get_random_value(variable.LOW_PRICE, variable.HIGH_PRICE)/100)*traveller.mora);
 
             items_att.push(attributes);
         });
@@ -86,9 +99,9 @@ module.exports = {
         let items_list = new Discord.MessageEmbed()
             .setTitle(`Hi ${traveller.name}! Choose one item below or random`)
             .addFields(
-                { name: 'Item 1', value: items_att[0] },
-                { name: 'Item 2', value: items_att[1] },
-                { name: 'Item 3', value: items_att[2] },
+                { name: `Item 1 : ${variable.MORA} \`${items[0].mora}\``, value: items_att[0] },
+                { name: `Item 2 : ${variable.MORA} \`${items[1].mora}\``, value: items_att[1] },
+                { name: `Item 3 : ${variable.MORA} \`${items[2].mora}\``, value: items_att[2] },
             )
 
         message.channel.send({ embeds: [items_list] }).then((message) => {

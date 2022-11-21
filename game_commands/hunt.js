@@ -8,7 +8,7 @@ async function hunt(client, message, traveller, quantity) {
         var today = new Date();
         var mora = variable.MORA_REWARD_MULTIPLIER * traveller.lvl;
         var total_mora = 0;
-        var exp = variable.HUNT_EXP * quantity;
+        var exp = variable.HUNT_EXP * quantity * Math.ceil(traveller.lvl/10);
 
         // get rewards from hunt
         total_mora = get_random_value(mora * (1 - variable.REWARD_RANGE), mora * (1 + variable.REWARD_RANGE));
@@ -45,7 +45,7 @@ async function hunt(client, message, traveller, quantity) {
 module.exports = {
     name: 'hunt',
     //aliases
-    description: `.hunt [number], Spend your resins to collect moras and primos. Enter [number] to repeat a number of times`,
+    description: `.hunt [number], Spend your resins to collect rewards. Enter [number] to repeat a number of times`,
     async execute(client, message, args) {
         var quantity = args[0];
         if (!quantity) {
@@ -72,7 +72,7 @@ module.exports = {
 
         // not enough resin
         if (traveller.resin < (quantity * variable.HUNT_COST) || quantity == 0) {
-            return message.channel.send('Not enough resin');
+            return message.channel.send(`You don't have enough resin. ${variable.RESIN} ${variable.HUNT_COST} resin required`);
         }
 
         // get hunt rewards

@@ -8,6 +8,11 @@ exports.EXP_DAILY_MULTIPLIER = 500;
 exports.REWARD_RANGE = 0.05;
 exports.ATTACK_RANGE = 0.02;
 
+// shop part
+exports.LOW_PRICE = 10;
+exports.HIGH_PRICE = 50;
+exports.SHOP_COST = 10;
+
 // level up attributes bonus
 exports.NEXT_LEVEL_EXP = 50;
 exports.NEXT_LEVEL_ATK = 0.3;
@@ -15,17 +20,17 @@ exports.NEXT_LEVEL_DEF = 0.3;
 exports.NEXT_LEVEL_HP = 0.5;
 
 // artifact RNG in percent
-exports.ARTIFACT_HP = 20;
-exports.ARTIFACT_ATK = 15;
-exports.ARTIFACT_DEF = 15;
-exports.ARTIFACT_EVA = 20;
+exports.ARTIFACT_HP = 10;
+exports.ARTIFACT_ATK = 10;
+exports.ARTIFACT_DEF = 10;
+exports.ARTIFACT_EVA = 5;
 
 // battle part
 exports.BOSS_NAME = ['Dvalin', 'Lupus Boreas', 'Childe', 'La Signora', 'Raiden Shogun', 'Scaramouche', 'Azhdaha'];
 exports.BOSS_COST = 30;
-exports.BOSS_ATK_MULTIPLIER = 120;
-exports.BOSS_HP_MULTIPLIER = 1200;
-exports.BOSS_DEF_MULTIPLIER = 12;
+exports.BOSS_ATK_MULTIPLIER = 80;
+exports.BOSS_HP_MULTIPLIER = 750;
+exports.BOSS_DEF_MULTIPLIER = 6;
 exports.BOSS_EVASION = 15;
 exports.MORA_BOSS_MULTIPLIER = 629;
 exports.BOSS_EXP_REWARD = 1000;

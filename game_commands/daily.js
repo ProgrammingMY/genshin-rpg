@@ -26,8 +26,8 @@ module.exports = {
         // daily reward already claimed
         if (remaining_time == 0) {
             var streak = 0;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
-            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
+            var new_mora = Math.ceil(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.ceil(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'Already claimed for today, please comeback tomorrow!';
         }
         // daily reward havent claimed for today
@@ -35,8 +35,8 @@ module.exports = {
             traveller.daily += 1;
             traveller.last_used_daily_time = today;
             var streak = traveller.daily;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
-            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
+            var new_mora = Math.ceil(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.ceil(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'You have succesfully claimed your daily rewards!';
             traveller.mora += new_mora;
             traveller.exp += new_exp;
@@ -46,8 +46,8 @@ module.exports = {
             traveller.daily = 1;
             traveller.last_used_daily_time = today;
             var streak = traveller.daily;
-            var new_mora = Math.floor(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
-            var new_exp = Math.floor(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
+            var new_mora = Math.ceil(streak * variable.MORA_DAILY_MULTIPLIER * traveller.lvl);
+            var new_exp = Math.ceil(streak * variable.EXP_DAILY_MULTIPLIER * traveller.lvl);
             var msg = 'You lose the daily reward streak!'
             traveller.mora += new_mora;
             traveller.exp += new_exp;

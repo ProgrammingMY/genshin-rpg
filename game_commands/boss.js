@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'boss',
     //aliases
-    description: 'Spend your resins to challenge the boss and rank up in the leaderboard!',
+    description: 'Spend your resin to challenge the boss to earn tons of experience!',
     async execute(client, message, args) {
         var user = message.author;
         const load_traveller_data = client.utils.get('load_traveller_data');
@@ -19,7 +19,7 @@ module.exports = {
 
         // not enough resin
         if (traveller.resin < variable.BOSS_COST) {
-            return message.channel.send(`You don't have enough resin. ${variable.BOSS_COST} resin required`);
+            return message.channel.send(`You don't have enough resin. ${variable.RESIN} ${variable.BOSS_COST} resin required`);
         };
 
         // get boss data
@@ -44,8 +44,8 @@ module.exports = {
             if (result) {
                 status =  'You Win and Ranked Up!';
                 color = '7CFC00';
-                new_mora = Math.floor(variable.MORA_BOSS_MULTIPLIER * traveller.lvl);
-                new_exp = variable.BOSS_EXP_REWARD;
+                new_mora = Math.ceil(variable.MORA_BOSS_MULTIPLIER * traveller.lvl);
+                new_exp = (Math.ceil(traveller.lvl/10))*variable.BOSS_EXP_REWARD;
                 traveller.mora += new_mora;
                 traveller.exp += new_exp;
             }
