@@ -8,7 +8,7 @@ Disclaimer: This project is just to practice my Javascript and NoSQL databases m
 
 ### Why NoSQL?
 
-Player data consists of variety type of data (numerical, boolean, time series, array). NoSQL is suitable for this situation. Easy to do queries for updates, sorting for ranking and manipulate data for testing. MongoDB is used for this project.
+We just need to have one table and there is no relation table. NoSQL is suitable for this situation. Easy to do queries for updates, sorting for ranking and manipulate data for testing. MongoDB is used for this project.
 
 ## GET STARTED
 
