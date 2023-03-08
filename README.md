@@ -1,4 +1,4 @@
-# RPG Genshin game in discord <UNDER CONSTRUCTION>
+# RPG Genshin game in discord (UNDER CONSTRUCTION)
 
 ## Introduction
 
