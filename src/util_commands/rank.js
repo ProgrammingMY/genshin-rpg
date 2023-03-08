@@ -1,13 +1,3 @@
-// import database management system
-var AWS = require("aws-sdk");
-
-// Use a DynamoDB Local endpoint
-AWS.config.update({
-    region: "ap-southeast-1",
-    accessKeyId: 'AKIA4LKF2CRSQ2SKO34S',
-    secretAccessKey: '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'
-});
-
 // get all travellers data in the same guild
 async function get_travellers_data(guildid) {
     return new Promise((resolve, reject) => {
