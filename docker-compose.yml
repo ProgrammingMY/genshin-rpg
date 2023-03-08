@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  bot:
+    build: ./bot
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/travellers
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    volumes:
+      - ./data:/data/db

@@ -36,7 +36,7 @@ module.exports = {
 
         // load traveller data  if any
         let traveller = await load_traveller_data(user, message.guild.id);
-        if (traveller == null) {
+        if (traveller.length === 0) {
             return message.channel.send("You havent join the guild");
         }
 
@@ -44,6 +44,11 @@ module.exports = {
         view_profile(client, message, user, traveller);
 
         // save latest traveller data
-        save_traveller_data(user, traveller);
+        if (await save_traveller_data(user, traveller)){
+            return console.log(`Profile ${traveller.name} updated!`);
+        } else {
+            return console.log(`Unable to update ${traveller.name} data due to error!`);
+        }
+        
     }
 }

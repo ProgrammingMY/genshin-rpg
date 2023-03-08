@@ -8,7 +8,7 @@ module.exports = {
 
         // load traveller data  if any
         var traveller = await load_traveller_data(user, message.guild.id);
-        if (traveller != null) return message.channel.send("You already joined the guild!");
+        if (traveller.length !== 0) return message.channel.send("You already joined the guild!");
 
         let today = new Date;
 
@@ -31,7 +31,12 @@ module.exports = {
         }
 
         // update traveller data into the database
-        save_traveller_data(user, traveller);
-        return message.channel.send(`Hi ${traveller.name}, welcome!`);
+        if (save_traveller_data(user, traveller)) {
+            return message.channel.send(`Hi ${traveller.name}, welcome!`);
+        } else {
+            return message.channel.send(`Unable to create a new profile due to error`);
+        }
+
+        
     }
 }
