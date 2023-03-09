@@ -8,7 +8,7 @@ module.exports = {
 
         // load traveller data  if any
         var traveller = await load_traveller_data(user, message.guild.id);
-        if (traveller.length !== 0) return message.channel.send("You already joined the guild!");
+        if (traveller) return message.channel.send("You already joined the guild!");
 
         let today = new Date;
 

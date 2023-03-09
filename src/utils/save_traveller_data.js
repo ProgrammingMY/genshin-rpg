@@ -1,27 +1,21 @@
+const MongoClient = require('mongodb').MongoClient;
+const { config } = require('dotenv');
+config();
+
+const mongo_client = new MongoClient(process.env.MONGO_URL);
+const MONGO_DB = process.env.MONGO_DB;
+const MONGO_COLLECTION = process.env.MONGO_COLLECTION;
+
 module.exports = async function (user, traveller) {
-    var docClient = new AWS.DynamoDB.DocumentClient();
-    console.log(traveller);
+    // connect to mongo client
+    const travellers = (mongo_client).db(MONGO_DB).collection(MONGO_COLLECTION);
 
-    // set parameters to save in the database
-    const params = {
-        TableName: "Travellers",
-        Item: {
-            "id": traveller.id,
-            "guildid": traveller.guildid,
-            "lvl": traveller.lvl,
-            "name": traveller.name,
-            "data": traveller
-        }
-    };
+    // update traveller data into the database
+    var query = { id: user.id };
+    var update = { $set: traveller }
+    var option = { upsert: true };
 
-    // store the data
-    docClient.put(params, function (err) {
-        if (err) {
-            console.error("Unable to add traveller\n", err);
-            return false;
-        } else {
-            console.log(`Successfully added ${traveller.name}`);
-            return true;
-        }
-    });
+    var traveller = await travellers.updateOne(query, update, option);
+
+    return traveller;
 };
