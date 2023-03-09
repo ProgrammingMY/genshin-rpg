@@ -1,8 +1,25 @@
-const Discord = require('discord.js');
-const MongoClient = require('mongodb').MongoClient;
+// query mongodb using moogose
+const mongoose = require('mongoose');
+const { mongoPath } = require('../config.json');
 
-const client = new Discord.Client();
-const mongoClient = new MongoClient("mongodb+srv://loqmanh0:Co0xqqStiQgspIoK@cluster0.mzkrq6y.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true });
+module.exports = {
+    name: 'test',
+    description: 'test',
+    async execute(client, message, args) {
+        mongoose.connect(mongoPath, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false
+        }).then(() => {
+            console.log('Connected to MongoDB');
+            message.channel.send('pong');
+        }).catch((err) => {
+            console.log(err);
+        });
+    }
+}
+
+// query mongodb using mongodb
 
 
 //test insert some value to mongodb
@@ -16,7 +33,7 @@ module.exports = {
 
         const collection = mongoClient.db('mydatabase').collection('mycollection');
         collection.insertOne({ message: 'pong' });
-        message.reply('pong');
+        message.channel.send('pong');
     }
 }
 
