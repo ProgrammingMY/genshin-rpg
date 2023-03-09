@@ -1,5 +1,5 @@
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: 'boss',
@@ -54,7 +54,7 @@ module.exports = {
             reward_list += variable.EXP + `\`+${new_exp} exp\`\n`;
             reward_list += variable.RESIN + `\`-${variable.BOSS_COST} resin\``;
 
-            let result_status = new Discord.MessageEmbed()
+            let result_status = new EmbedBuilder()
             .setColor(color)
             .setTitle(`${traveller.name} VS ${boss.name}`)
             .addFields(

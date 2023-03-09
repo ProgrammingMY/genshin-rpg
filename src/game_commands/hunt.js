@@ -1,5 +1,5 @@
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 async function hunt(client, message, traveller, quantity) {
     return new Promise((resolve, reject) => {
@@ -27,7 +27,7 @@ async function hunt(client, message, traveller, quantity) {
 
         let remaining_resin = variable.RESIN + `\`${traveller.resin}/300\``;
 
-        let hunt_message = new Discord.MessageEmbed()
+        let hunt_message = new EmbedBuilder()
             .setColor('00FF00')
             .setTitle('Hunting Done!')
             .setDescription('You went hunting and receive following rewards')
