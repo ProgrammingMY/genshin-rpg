@@ -2,20 +2,19 @@
   "name": "wei-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
-  "author": "",
+  "keywords": [],
+  "author": "akkeyron",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.7.1",
-    "dotenv": "^16.0.1",
-    "mongoose": "^7.0.1",
-    "npm-check-updates": "^16.4.1"
-  },
-  "devDependencies": {
-    "typescript": "^4.9.5"
+    "@discordjs/rest": "^1.1.0",
+    "@types/node": "^18.7.14",
+    "chalk": "^4.1.2",
+    "discord.js": "14.3.0",
+    "dotenv": "^16.0.2",
+    "mongodb": "^5.1.0"
   }
 }

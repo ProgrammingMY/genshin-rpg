@@ -1,5 +1,5 @@
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder  } = require('discord.js');
 
 module.exports = function (message, traveller){
     var next_level = traveller.lvl*variable.NEXT_LEVEL_EXP;
@@ -40,7 +40,7 @@ module.exports = function (message, traveller){
         traveller.def = new_def;
 
         // send update embeds
-        const new_result_embed = new Discord.MessageEmbed()
+        const new_result_embed = new EmbedBuilder()
         .setColor('FFD700')
         .addFields( 
             { name: `${traveller.name} leveled up!:` , value: stats_list}

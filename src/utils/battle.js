@@ -1,5 +1,5 @@
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 function get_damage_value (traveller, opponent) {
     // 50/50 chance to double damage
@@ -45,7 +45,7 @@ module.exports = function (client, message, traveller, opponent, callback){
         var traveller_logs = '';
 
         // send fight live update
-        var fight_message = new Discord.MessageEmbed()
+        var fight_message = new EmbedBuilder()
         .setTitle(fight_title)
         message.channel.send( {embeds: [fight_message]} ).then(embedMessage => {
             var i = setInterval(function(){
@@ -67,7 +67,7 @@ module.exports = function (client, message, traveller, opponent, callback){
                 traveller_hp_bar = progress_bar(traveller_hp, traveller_max_hp, 10);
                 traveller_hp_bar += `${traveller_hp}/${traveller_max_hp}`;
                 
-                let update_hp = new Discord.MessageEmbed()
+                let update_hp = new EmbedBuilder()
                 .setTitle(fight_title)
                 .addFields(
                     { name: `${traveller.name} HP`, value: traveller_hp_bar },

@@ -1,6 +1,8 @@
-require('dotenv').config();
-const { Client, Collection, Discord, GatewayIntentBits } = require('discord.js');
-//const variable = require('./variable.js');
+const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const { config } = require('dotenv');
+const { readdirSync } = require("fs");
+config();
+
 const client = new Client({ 
     intents: [
         GatewayIntentBits.Guilds, 
@@ -15,12 +17,11 @@ const client = new Client({
 client.commands = new Collection();
 client.events = new Collection();
 client.utils = new Collection();
+client.variable = require('./variable.js');
 client.PREFIX = '.';
 
-['event_handler'].forEach(handler =>{
-    require(`./handlers/${handler}`)(client, Discord);
+['event_handler', 'command_handler', 'utils_handler'].forEach(handler =>{
+    require(`./handlers/${handler}`)(client);
 })
-
-client.variable = require('./variable.js');
 
 client.login(process.env.DISCORD_KEY);

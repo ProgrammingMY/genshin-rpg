@@ -1,5 +1,5 @@
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: 'pvp',
@@ -49,7 +49,7 @@ module.exports = {
             reward_list += `${opponent.name}\n`;
             reward_list += variable.MORA + `\`${opponent_old_mora} -> ${opponent.mora}\`\n`;
 
-            let result_status = new Discord.MessageEmbed()
+            let result_status = new EmbedBuilder()
             .setColor(color)
             .setTitle(`${traveller.name} VS ${opponent.name}`)
             .addFields(

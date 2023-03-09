@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const variable = require('../variable.js');
 
 function view_profile(client, message, user, traveller) {
@@ -10,7 +10,7 @@ function view_profile(client, message, user, traveller) {
     let progress = progress_bar(traveller.exp, traveller.lvl * variable.NEXT_LEVEL_EXP, 10);
     let next_exp = traveller.lvl * variable.NEXT_LEVEL_EXP;
 
-    let profile = new Discord.MessageEmbed()
+    let profile = new EmbedBuilder()
         .setColor('#0099ff')
         .setTitle(`${traveller.name}'s Profile`)
         .addFields(
@@ -36,7 +36,7 @@ module.exports = {
 
         // load traveller data  if any
         let traveller = await load_traveller_data(user, message.guild.id);
-        if (traveller.length === 0) {
+        if (!traveller) {
             return message.channel.send("You havent join the guild");
         }
 
@@ -44,11 +44,7 @@ module.exports = {
         view_profile(client, message, user, traveller);
 
         // save latest traveller data
-        if (await save_traveller_data(user, traveller)){
-            return console.log(`Profile ${traveller.name} updated!`);
-        } else {
-            return console.log(`Unable to update ${traveller.name} data due to error!`);
-        }
+        await save_traveller_data(user, traveller)
         
     }
 }

@@ -1,6 +1,6 @@
 const one_day = 1000*60*60*24;
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: 'daily',
@@ -57,7 +57,7 @@ module.exports = {
 
         let reward_list = variable.MORA + `\`+${new_mora} mora\`` + '\n';
 
-        let daily_message = new Discord.MessageEmbed()
+        let daily_message = new EmbedBuilder()
         .setColor('FFD700')
         .setTitle(msg)
         .addFields(

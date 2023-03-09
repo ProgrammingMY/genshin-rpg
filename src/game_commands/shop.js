@@ -1,6 +1,6 @@
 
 const variable = require('../variable.js');
-const Discord = require('discord.js');
+const { Discord, EmbedBuilder } = require('discord.js');
 
 function update_traveller_attribute(save_traveller_data, message, items, selection, traveller) {
     var user = message.author;
@@ -34,7 +34,7 @@ function update_traveller_attribute(save_traveller_data, message, items, selecti
 
 
     // send update embeds
-    const new_result_embed = new Discord.MessageEmbed()
+    const new_result_embed = new EmbedBuilder()
         .setColor('FFD700')
         .addFields(
             { name: `New stats for ${traveller.name}:`, value: stats_list }
@@ -96,7 +96,7 @@ module.exports = {
         });
 
         // display all 3 items with attributes
-        let items_list = new Discord.MessageEmbed()
+        let items_list = new EmbedBuilder()
             .setTitle(`Hi ${traveller.name}! Choose one item below or random`)
             .addFields(
                 { name: `Item 1 : ${variable.MORA} \`${items[0].mora}\``, value: items_att[0] },
