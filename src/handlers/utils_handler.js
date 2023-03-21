@@ -5,7 +5,12 @@ module.exports = (client, Discord) => {
 
     for(const file of utility_files){
         const utility = require(`../utils/${file}`);
-        const utility_name = file.split('.')[0];
-        client.utils.set(utility_name, utility);
+
+        if (utility.name) {
+            client.utils.set(utility.name, utility);
+            console.log(`Loaded utility: ${utility.name}`);
+        } else {
+            continue;
+        }
     }
 }
