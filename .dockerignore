@@ -4,3 +4,4 @@ node_modules
 ./database/traveller_backup.json
 ./database/traveller.json
 Travellers.json
+old_codes
