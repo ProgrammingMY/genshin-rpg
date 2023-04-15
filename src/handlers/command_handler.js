@@ -8,8 +8,9 @@ module.exports = (client) => {
         for(const file of command_files){
             const command = require(`../${dir}/${file}`);
             
-            if(command.name){
-                client.commands.set(command.name, command);
+            if(command.data){
+                client.commands.set(command.data.name, command);
+                console.log(`Loaded command: ${command.data.name}`);
             }else{
                 continue;
             }

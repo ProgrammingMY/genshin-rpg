@@ -1,10 +1,10 @@
 const variable = require('../variable.js');
-const { Discord, EmbedBuilder } = require('discord.js');
+const { Discord, EmbedBuilder, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
-    name: 'boss',
-    //aliases
-    description: 'Spend your resin to challenge the boss to earn tons of experience!',
+    data: new SlashCommandBuilder()
+        .setName('boss')
+        .setDescription('Spend your resin to challenge the boss to earn tons of experience!'),
     async execute(client, message, args) {
         var user = message.author;
         const load_traveller_data = client.utils.get('load_traveller_data');
